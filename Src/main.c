@@ -56,21 +56,21 @@ static void MX_CAN1_Init(void);
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* hcan){
-	printf("received:\n");
-	printf("Data[0] %d\n",hcan->pRxMsg->Data[0]);
-	printf("Data[1] %d\n",hcan->pRxMsg->Data[1]);
-	printf("Data[2] %d\n",hcan->pRxMsg->Data[2]);
-	printf("Data[3] %d\n",hcan->pRxMsg->Data[3]);
-	printf("Data[4] %d\n",hcan->pRxMsg->Data[4]);
-	printf("Data[5] %d\n",hcan->pRxMsg->Data[5]);
-	printf("Data[6] %d\n",hcan->pRxMsg->Data[6]);
-	printf("Data[7] %d\n",hcan->pRxMsg->Data[7]);
+  printf("received:\n");
+  printf("Data[0] %d\n",hcan->pRxMsg->Data[0]);
+  printf("Data[1] %d\n",hcan->pRxMsg->Data[1]);
+  printf("Data[2] %d\n",hcan->pRxMsg->Data[2]);
+  printf("Data[3] %d\n",hcan->pRxMsg->Data[3]);
+  printf("Data[4] %d\n",hcan->pRxMsg->Data[4]);
+  printf("Data[5] %d\n",hcan->pRxMsg->Data[5]);
+  printf("Data[6] %d\n",hcan->pRxMsg->Data[6]);
+  printf("Data[7] %d\n",hcan->pRxMsg->Data[7]);
 	
-	for(int i =0; i < 8; ++i) hcan->pRxMsg->Data[i] = 0;	
+  for(int i =0; i < 8; ++i) hcan->pRxMsg->Data[i] = 0;	
 }
 
 void HAL_CAN_TxCpltCallback(CAN_HandleTypeDef* hcan){
-	printf("transmition complete\n");
+  printf("transmition complete\n");
 }
 /* USER CODE END PFP */
 
@@ -98,32 +98,31 @@ int main(void)
   MX_CAN1_Init();
 
   /* USER CODE BEGIN 2 */
-	HAL_CAN_Init(&hcan1);
+  HAL_CAN_Init(&hcan1);
 	
-	CAN_FilterConfTypeDef canFilterConfig;
-	canFilterConfig.FilterNumber = 0;
-	canFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
-	canFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
-	canFilterConfig.FilterIdHigh = 0x0000;
-	canFilterConfig.FilterIdLow = 0x0000;
-	canFilterConfig.FilterMaskIdHigh = 0x0000 << 5;
-	canFilterConfig.FilterMaskIdLow = 0x0000;
-	canFilterConfig.FilterFIFOAssignment = CAN_FIFO0;
-	canFilterConfig.FilterActivation = ENABLE;
-	canFilterConfig.BankNumber = 1;
-	HAL_CAN_ConfigFilter(&hcan1, &canFilterConfig);	
+  CAN_FilterConfTypeDef canFilterConfig;
+  canFilterConfig.FilterNumber = 0;
+  canFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
+  canFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
+  canFilterConfig.FilterIdHigh = 0x0000;
+  canFilterConfig.FilterIdLow = 0x0000;
+  canFilterConfig.FilterMaskIdHigh = 0x0000 << 5;
+  canFilterConfig.FilterMaskIdLow = 0x0000;
+  canFilterConfig.FilterFIFOAssignment = CAN_FIFO0;
+  canFilterConfig.FilterActivation = ENABLE;
+  canFilterConfig.BankNumber = 1;
+  HAL_CAN_ConfigFilter(&hcan1, &canFilterConfig);	
 	
-	canRxBuffer.StdId = 0x00;
-	canRxBuffer.RTR=CAN_RTR_DATA;
-	canRxBuffer.IDE=CAN_ID_STD;
-	canRxBuffer.DLC=0;
-	for(int i =0; i < 8; ++i) canRxBuffer.Data[i] = 0;
+  canRxBuffer.StdId = 0x00;
+  canRxBuffer.RTR=CAN_RTR_DATA;
+  canRxBuffer.IDE=CAN_ID_STD;
+  canRxBuffer.DLC=0;
+  for(int i =0; i < 8; ++i) canRxBuffer.Data[i] = 0;
 	
-	
-	canTxBuffer.StdId=0x71;
-	canTxBuffer.RTR=CAN_RTR_DATA;
-	canTxBuffer.IDE=CAN_ID_STD;
-	canTxBuffer.DLC=8;
+  canTxBuffer.StdId=0x71;
+  canTxBuffer.RTR=CAN_RTR_DATA;
+  canTxBuffer.IDE=CAN_ID_STD;
+  canTxBuffer.DLC=8;
   
   canTxBuffer.ExtId=0;
   
@@ -137,10 +136,10 @@ int main(void)
   canTxBuffer.Data[7]=0x8;  
 	
 	
-	hcan1.pTxMsg = &canTxBuffer;
-	hcan1.pRxMsg = &canRxBuffer;
+  hcan1.pTxMsg = &canTxBuffer;
+  hcan1.pRxMsg = &canRxBuffer;
 		
-	printf("start\n");
+  printf("start\n");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -151,10 +150,10 @@ int main(void)
 
   /* USER CODE BEGIN 3 */
 		
-		HAL_CAN_Transmit_IT(&hcan1);
-		HAL_Delay(100);
-		HAL_CAN_Receive_IT(&hcan1, CAN_FIFO0);
-		HAL_Delay(100);
+	HAL_CAN_Transmit_IT(&hcan1);
+	HAL_Delay(100);
+	HAL_CAN_Receive_IT(&hcan1, CAN_FIFO0);
+	HAL_Delay(100);
 		
   }
   /* USER CODE END 3 */
